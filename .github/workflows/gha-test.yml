@@ -30,18 +30,6 @@ jobs:
         with:
           working_directory: ${{ matrix.working_directory }}
 
-      - name: Create root index HTML
-        uses: ./.github/workflows/actions/create-root-index-html
-        with:
-          # list of the projects matching the working_directory matrix
-          projects: "[./folder1, ./folder2]"
-
-      - name: Upload root intex artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: root-index-html
-          path: ./docs
-
       - name: Upload Folder Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -60,11 +48,11 @@ jobs:
     needs: create-folders
 
     steps:
-      - name: Download Rood index html
-        uses: actions/download-artifact@v4
+      - name: Create root index HTML
+        uses: ./.github/workflows/actions/create-root-index-html
         with:
-          name: root-index-html
-          path: ./docs
+          # list of the projects matching the working_directory matrix
+          projects: "[./folder1, ./folder2]"
           
       - name: Download Folder1 Artifact
         uses: actions/download-artifact@v4
