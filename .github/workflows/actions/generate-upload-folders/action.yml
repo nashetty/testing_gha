@@ -24,7 +24,7 @@ runs:
             <title>Hello World</title>
         </head>
         <body>
-            <h1>Hello World from ${BASENAME}</h1>
+            <h1>Hello World from '"${BASENAME}"'</h1>
         </body>
         </html>' > ../docs/${BASENAME}/index.html
                 echo "Created ../docs/${BASENAME}/index.html with Hello World content."
