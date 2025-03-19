@@ -36,6 +36,12 @@ jobs:
           # list of the projects matching the working_directory matrix
           projects: "[./folder1, ./folder2]"
 
+      - name: Upload root intex artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: root-index-html
+          path: ./docs
+
       - name: Upload Folder Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -54,6 +60,12 @@ jobs:
     needs: create-folders
 
     steps:
+      - name: Download Rood index html
+        uses: actions/download-artifact@v4
+        with:
+          name: root-index-html
+          path: ./docs
+          
       - name: Download Folder1 Artifact
         uses: actions/download-artifact@v4
         with:
