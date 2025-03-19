@@ -30,13 +30,12 @@ jobs:
         with:
           working_directory: ${{ matrix.working_directory }}
 
-      - name: Normalize Folder Name
-        id: normalize-folder
+      - name: Normalise Folder Name
+        id: normalise-folder
         run: |
           # Remove the './' prefix from the working_directory
-          NORMALIZED_FOLDER=$(echo "${{ matrix.working_directory }}" | sed 's|^\./||')
-          echo "normalized_folder=$NORMALIZED_FOLDER" >> $GITHUB_ENV
-
+          NORMALISED_FOLDER=$(echo "${{ matrix.working_directory }}" | sed 's|^\./||')
+          echo "normalised_folder=$NORMALISED_FOLDER" >> $GITHUB_ENV
 
       - name: Upload Folder Artifact
         uses: actions/upload-artifact@v4
