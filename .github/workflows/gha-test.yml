@@ -41,8 +41,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           # Use the normalized folder name for the artifact name and path
-          name: docs-${{ env.normalized_folder }}
-          path: ./docs/${{ env.normalized_folder }}
+          name: docs-${{ env.normalised_folder }}
+          path: ./docs/${{ env.normalised_folder }}
 
   upload-docs-artifact-and-publish:
     name: Upload and publish
