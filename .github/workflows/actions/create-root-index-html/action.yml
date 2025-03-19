@@ -12,6 +12,8 @@ runs:
       shell: bash
       run: |
         echo "Creating root index.html..."
+        # Ensure the ../docs directory exists
+        mkdir -p ../docs
         # Create the root index.html file that's required by GitHub Pages
         echo '<!DOCTYPE html>
         <html>
