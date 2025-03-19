@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        working_directory: [./folder1, ./folder2]
+        working_directory: [folder1, folder2]
 
     steps:
       - name: Checkout Code
