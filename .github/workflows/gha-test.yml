@@ -25,7 +25,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Generate and upload folders and artifacts
+      - name: Generate and upload folders with files
         uses: ./.github/workflows/actions/generate-upload-folders
         with:
           working_directory: ${{ matrix.working_directory }}
