@@ -48,6 +48,9 @@ jobs:
     needs: create-folders
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
       - name: Create root index HTML
         uses: ./.github/workflows/actions/create-root-index-html
         with:
