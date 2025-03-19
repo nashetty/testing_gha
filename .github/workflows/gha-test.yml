@@ -68,16 +68,16 @@ jobs:
       - name: Download Normalized Folders Artifact
         uses: actions/download-artifact@v4
         with:
-          name: normalized-folders
+          name: normalised-folders
 
-      - name: Read Normalized Folders and Download Artifacts
+      - name: Read Normalised Folders and Download Artifacts
         run: |
           # Read the list of normalized folders from the artifact
           while IFS= read -r folder; do
             echo "Downloading artifact for $folder"
             mkdir -p ./docs/$folder
             actions/download-artifact@v4 --name docs-$folder --path ./docs/$folder
-          done < normalized_folders.txt
+          done < normalised_folders.txt
 
       - name: Create root index HTML
         uses: ./.github/workflows/actions/create-root-index-html
