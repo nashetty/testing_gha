@@ -1,0 +1,38 @@
+name: Create index HTML
+
+inputs:
+  projects:
+    description: 'Working directory'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create root index.html
+      shell: bash
+      run: |
+        echo "Creating root index.html..."
+        # Create the root index.html file that's required by GitHub Pages
+        echo '<!DOCTYPE html>
+        <html>
+        <head>
+            <title>Title</title>
+        </head>
+        <body style="color: #313539;">
+            <div style="display: flex; align-items: center;">
+                <img style="padding: 20px 30px" width="75" height="75" alt="" loading="lazy" onerror="this.setAttribute('data-error', 1)" data-nuxt-pic="" src="https://a.storyblok.com/f/152976/400x400/48d5a3027c/team_manypets.png/m/224x224/filters:format(png):quality(75)" sizes="112.5px" srcset="https://a.storyblok.com/f/152976/400x400/48d5a3027c/team_manypets.png/m/112x112/filters:format(png):quality(75) 112w, https://a.storyblok.com/f/152976/400x400/48d5a3027c/team_manypets.png/m/224x224/filters:format(png):quality(75) 224w">
+            </div>
+            <h1 style="padding: 0 30px;">Test</h1>
+            <ul>' > ../docs/index.html
+
+            # Loop through all subdirectories in ../docs and add links to them
+            for project in ${{ inputs.projects }}; do
+                BASENAME=$(basename "$project")
+                echo "        <li style=\"list-style-type: none; font-size: 1.25rem; font-weight: 800\"><a href=\"$BASENAME/index.html\" style=\"color: #313539;text-decoration: none\">$BASENAME Test</a></li>" >> ../docs/index.html
+            done
+
+        echo '    </ul>
+        </body>
+        </html>' >> ../docs/index.html
+        echo "Root index.html created."
+
