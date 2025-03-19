@@ -40,7 +40,7 @@ jobs:
       # - name: Upload Folder Artifact
       #   uses: actions/upload-artifact@v4
       #   with:
-      #     # Use the normalized folder name for the artifact name and path
+      #     # Use the normalised folder name for the artifact name and path
       #     name: docs-${{ env.normalised_folder }}
       #     path: ./docs/${{ env.normalised_folder }}
 
@@ -65,14 +65,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Download Normalized Folders Artifact
+      - name: Download Normalised Folders Artifact
         uses: actions/download-artifact@v4
         with:
           name: normalised-folders
 
       - name: Read Normalised Folders and Download Artifacts
         run: |
-          # Read the list of normalized folders from the artifact
+          # Read the list of normalised folders from the artifact
           while IFS= read -r folder; do
             echo "Downloading artifact for $folder"
             mkdir -p ./docs/$folder
