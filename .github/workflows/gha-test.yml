@@ -37,12 +37,18 @@ jobs:
           NORMALISED_FOLDER=$(echo "${{ matrix.working_directory }}" | sed 's|^\./||')
           echo "normalised_folder=$NORMALISED_FOLDER" >> $GITHUB_ENV
 
-      - name: Upload Folder Artifact
+      # - name: Upload Folder Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     # Use the normalized folder name for the artifact name and path
+      #     name: docs-${{ env.normalised_folder }}
+      #     path: ./docs/${{ env.normalised_folder }}
+
+      - name: Upload Normalised Folders Artifact
         uses: actions/upload-artifact@v4
         with:
-          # Use the normalized folder name for the artifact name and path
-          name: docs-${{ env.normalised_folder }}
-          path: ./docs/${{ env.normalised_folder }}
+          name: normalised-folders
+          path: normalised_folders.txt
 
   upload-docs-artifact-and-publish:
     name: Upload and publish
@@ -58,24 +64,26 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
+      - name: Download Normalized Folders Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: normalized-folders
+
+      - name: Read Normalized Folders and Download Artifacts
+        run: |
+          # Read the list of normalized folders from the artifact
+          while IFS= read -r folder; do
+            echo "Downloading artifact for $folder"
+            mkdir -p ./docs/$folder
+            actions/download-artifact@v4 --name docs-$folder --path ./docs/$folder
+          done < normalized_folders.txt
+
       - name: Create root index HTML
         uses: ./.github/workflows/actions/create-root-index-html
         with:
-          # list of the projects matching the working_directory matrix
+          # Dynamically pass the list of projects
           projects: "[./folder1, ./folder2]"
-          
-      - name: Download Folder1 Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: docs-folder1
-          path: ./docs/folder1
-          
-      - name: Download Folder2 Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: docs-folder2
-          path: ./docs/folder2
 
       - name: Upload Combined Docs Artifact
         uses: actions/upload-pages-artifact@v3
