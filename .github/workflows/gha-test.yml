@@ -1,0 +1,64 @@
+name: Publish multiple pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-folders:
+    name: Create folders
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+      pages: write
+
+    # create one job for each of projects
+    strategy:
+      fail-fast: false
+      matrix:
+        working_directory: [./folder1, ./folder2]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Generate and upload folders and artifacts
+        uses: ./.github/workflows/actions/generate-upload-folders
+        with:
+          working_directory: ${{ matrix.working_directory }}
+
+      - name: Create root index HTML
+        uses: ./.github/workflows/actions/create-root-index-html
+        with:
+          # list of the projects matching the working_directory matrix
+          projects: "[./folder1, ./folder2]"
+
+  upload-docs-artifact-and-publish:
+    name: Upload and publish
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+      pages: write
+
+    needs: create-folders
+
+    steps:
+      - name: Upload Docs Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs'
+
+      - name: Deploy Docs to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Set Up Github Pages Environment Variables
+        env:
+          name: github-pages
+          url: ${{ steps.deployment.outputs.page_url }}
+        uses: actions/configure-pages@v5
