@@ -57,19 +57,19 @@ jobs:
       - name: Download Folder1 Artifact
         uses: actions/download-artifact@v4
         with:
-          name: docs/folder1
-          path: ../docs/folder1
+          name: docs-folder1
+          path: ./docs/folder1
           
       - name: Download Folder2 Artifact
         uses: actions/download-artifact@v4
         with:
-          name: docs/folder2
-          path: ../docs/folder2
+          name: docs-folder2
+          path: ./docs/folder2
 
       - name: Upload Combined Docs Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '../docs'
+          path: './docs'
 
       - name: Deploy Docs to Github Pages
         id: deployment
