@@ -25,7 +25,7 @@ runs:
                 <img style="padding: 20px 30px" width="75" height="75" alt="" loading="lazy" onerror="this.setAttribute('data-error', 1)" data-nuxt-pic="" src="https://a.storyblok.com/f/152976/400x400/48d5a3027c/team_manypets.png/m/224x224/filters:format(png):quality(75)" sizes="112.5px" srcset="https://a.storyblok.com/f/152976/400x400/48d5a3027c/team_manypets.png/m/112x112/filters:format(png):quality(75) 112w, https://a.storyblok.com/f/152976/400x400/48d5a3027c/team_manypets.png/m/224x224/filters:format(png):quality(75) 224w">
             </div>
             <h1 style="padding: 0 30px;">Test</h1>
-            <ul>' > ../docs/index.html
+            <ul>' > ./docs/index.html
 
             # Loop through all subdirectories in ../docs and add links to them
             for project in ${{ inputs.projects }}; do
