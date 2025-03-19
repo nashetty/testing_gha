@@ -12,8 +12,8 @@ runs:
       shell: bash
       run: |
         echo "Creating root index.html..."
-        # Ensure the ../docs directory exists
-        mkdir -p ../docs
+        # Ensure the ./docs directory exists
+        mkdir -p ./docs
         # Create the root index.html file that's required by GitHub Pages
         echo '<!DOCTYPE html>
         <html>
@@ -30,11 +30,11 @@ runs:
             # Loop through all subdirectories in ../docs and add links to them
             for project in ${{ inputs.projects }}; do
                 BASENAME=$(basename "$project")
-                echo "        <li style=\"list-style-type: none; font-size: 1.25rem; font-weight: 800\"><a href=\"$BASENAME/index.html\" style=\"color: #313539;text-decoration: none\">$BASENAME Test</a></li>" >> ../docs/index.html
+                echo "        <li style=\"list-style-type: none; font-size: 1.25rem; font-weight: 800\"><a href=\"$BASENAME/index.html\" style=\"color: #313539;text-decoration: none\">$BASENAME Test</a></li>" >> ./docs/index.html
             done
 
         echo '    </ul>
         </body>
-        </html>' >> ../docs/index.html
+        </html>' >> ./docs/index.html
         echo "Root index.html created."
 
