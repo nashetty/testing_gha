@@ -29,8 +29,3 @@ runs:
         </html>' > ../docs/${BASENAME}/index.html
         echo "Created ../docs/${BASENAME}/index.html with Hello World content."
 
-      - name: Upload Folder Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: docs-${{ inputs.working_directory }}
-          path: ./docs/${{ inputs.working_directory }}
