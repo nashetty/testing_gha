@@ -36,18 +36,6 @@ jobs:
           # list of the projects matching the working_directory matrix
           projects: "[./folder1, ./folder2]"
 
-  upload-docs-artifact-and-publish:
-    name: Upload and publish
-    runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-      contents: read
-      pages: write
-
-    needs: create-folders
-
-    steps:
       - name: Upload Docs Artifact
         uses: actions/upload-pages-artifact@v3
         with:
