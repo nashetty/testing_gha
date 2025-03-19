@@ -30,55 +30,38 @@ jobs:
         with:
           working_directory: ${{ matrix.working_directory }}
 
-      - name: Upload Folder Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: docs-${{ matrix.working_directory }}
-          path: ./docs/${{ matrix.working_directory }}
-
-  upload-docs-artifact-and-publish:
-    name: Upload and publish
-    runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-      contents: read
-      pages: write
-
-    needs: create-folders
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      # - name: Upload Folder Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: docs-${{ matrix.working_directory }}
+      #     path: ./docs/${{ matrix.working_directory }}
         
       - name: Create root index HTML
+        if: ${{ matrix.folder == 'folder2' }}
         uses: ./.github/workflows/actions/create-root-index-html
         with:
           # list of the projects matching the working_directory matrix
           projects: "[./folder1, ./folder2]"
           
-      - name: Download Folder1 Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: docs-folder1
-          path: ./docs/folder1
-          
-      - name: Download Folder2 Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: docs-folder2
-          path: ./docs/folder2
+      # - name: Download Folder Artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: docs-${{ matrix.folder }}
+      #     path: ./docs/${{ matrix.folder }}
 
       - name: Upload Combined Docs Artifact
+        if: ${{ matrix.folder == 'folder2' }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: './docs'
 
       - name: Deploy Docs to Github Pages
+        if: ${{ matrix.folder == 'folder2' }}
         id: deployment
         uses: actions/deploy-pages@v4
 
       - name: Set Up Github Pages Environment Variables
+        if: ${{ matrix.folder == 'folder2' }}
         env:
           name: github-pages
           url: ${{ steps.deployment.outputs.page_url }}
