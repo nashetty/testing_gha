@@ -36,7 +36,37 @@ jobs:
           # list of the projects matching the working_directory matrix
           projects: "[./folder1, ./folder2]"
 
-      - name: Upload Docs Artifact
+      - name: Upload Folder Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs-${{ matrix.working_directory }}
+          path: ./docs
+
+  upload-docs-artifact-and-publish:
+    name: Upload and publish
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+      pages: write
+
+    needs: create-folders
+
+    steps:
+      - name: Download Folder1 Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: docs-./folder1
+          path: ./docs/folder1
+          
+      - name: Download Folder2 Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: docs-./folder2
+          path: ./docs/folder2
+
+      - name: Upload Combined Docs Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './docs'
@@ -50,3 +80,4 @@ jobs:
           name: github-pages
           url: ${{ steps.deployment.outputs.page_url }}
         uses: actions/configure-pages@v5
+
