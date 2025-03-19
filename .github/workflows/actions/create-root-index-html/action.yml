@@ -27,8 +27,11 @@ runs:
             <h1 style="padding: 0 30px;">Test</h1>
             <ul>' > ./docs/index.html
 
-            # Loop through all subdirectories in ../docs and add links to them
-            for project in ${{ inputs.projects }}; do
+            # Parse the projects input and loop through each project
+            projects_list=$(echo "${{ inputs.projects }}" | tr -d '[]' | tr ',' '\n')
+            for project in $projects_list; do
+            # Trim whitespace and extract the basename
+            project=$(echo "$project" | xargs)
                 BASENAME=$(basename "$project")
                 echo "        <li style=\"list-style-type: none; font-size: 1.25rem; font-weight: 800\"><a href=\"$BASENAME/index.html\" style=\"color: #313539;text-decoration: none\">$BASENAME Test</a></li>" >> ./docs/index.html
             done
