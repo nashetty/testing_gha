@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: normalised-folders
-          path: normalised_folders.txt
+          path: ./normalised_folders.txt
 
   upload-docs-artifact-and-publish:
     name: Upload and publish
