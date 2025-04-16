@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - folder1
+      - folder2
 
 jobs:
   create-folders:
