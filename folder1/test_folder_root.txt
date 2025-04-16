@@ -1,1 +1,1 @@
-Testing GHA paths
+Testing GHA pages paths (adding **)
